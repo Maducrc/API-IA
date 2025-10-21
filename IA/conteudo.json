@@ -1,0 +1,8 @@
+[
+  { "nome": "Matemática", "peso": 5 },
+  { "nome": "Português", "peso": 3 },
+  { "nome": "Física", "peso": 4 },
+  { "nome": "Química", "peso": 4 },
+  { "nome": "História", "peso": 2 },
+  { "nome": "Geografia", "peso": 2 }
+]
