@@ -105,29 +105,56 @@ document.getElementById("gerar-pdf").addEventListener("click", () => {
     const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF("p", "mm", "a4");
 
+    //Definições da Página e Margens
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
+    const margin = 10;
 
-    const imgWidth = pdfWidth;
-    const imgHeight = (canvas.heigth * pdfWidth) / canvas.width;
+    // Cálculos de Dimensão da Imagem
+    // A largura da imagem no PDF será a largura da página menos 2x a margem
+    const imgPdfWidth = pdfWidth - (2 * margin);
+    const imgPdfHeight = (canvas.height * imgPdfWidth) / canvas.width;
 
-    let heightLeft = imgHeight;
-    let position = 0;
-    const marginTop = 10;
+    let heightLeft = imgPdfHeight; // Altura total restante da imagem
+    let currentYPosition = margin; // Posição Y inicial na página
 
+    //Adicionar Título
+    const title = "Cronograma de Estudos - Vestibulinho ETEC";
     pdf.setFontSize(16);
-    pdf.text("📘 Cronograma de Estudos - Vestibulinho ETEC", 10, 15);
+    pdf.text(title, margin, margin + 5); // Adiciona o título um pouco abaixo da margem
 
-    pdf.addImage(imgData, "PNG", 0, marginTop, position, imgWidth, imgHeight);
-    heightLeft -= pdfHeight;
+    // Ajusta a posição Y inicial para começar após o título
+    currentYPosition = margin + 15;
 
+    // Altura da área de conteúdo útil (altura total - margem superior - margem inferior)
+    const pageContentHeight = pdfHeight - (2 * margin);
+
+    // Adicionar a Imagem (Primeira Página)
+    // A posição X é a margem. A posição Y é a margem + a altura do título.
+    pdf.addImage(imgData, "PNG", margin, currentYPosition, imgPdfWidth, imgPdfHeight);
+
+    // Subtrai o conteúdo útil da página (excluindo margem) da altura total da imagem
+    heightLeft -= (pdfHeight - currentYPosition - margin);
+
+    // A posição Y para "rolar" a imagem na próxima página é negativa
+    let imagePositionY = currentYPosition - pageContentHeight;
+
+    // 5. Loop para Quebrar Páginas
     while (heightLeft > 0) {
-      position = heightLeft - imgHeight;
       pdf.addPage();
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pdfHeight;
+
+      // Adiciona a imagem, mas com uma posição Y negativa para mostrar a parte 'abaixo'
+      // Isso simula o scroll da imagem
+      pdf.addImage(imgData, "PNG", margin, imagePositionY, imgPdfWidth, imgPdfHeight);
+
+      // Atualiza o que resta da imagem
+      heightLeft -= pageContentHeight;
+
+      // Atualiza a posição de rolagem para a próxima página
+      imagePositionY -= pageContentHeight;
     }
 
     pdf.save("cronograma.pdf");
   });
+
 });
