@@ -1,9 +1,9 @@
 document.getElementById("gerar").addEventListener("click", async () => {
-    
+
   // --- 1. Captura de Valores e Elementos ---
   const dias = document.getElementById("dias").value;
   const horas = document.getElementById("horas").value;
-  
+
   const resultado = document.getElementById("resultado");
   const loader = document.getElementById("loader");
 
@@ -11,9 +11,9 @@ document.getElementById("gerar").addEventListener("click", async () => {
 
   // Validação básica
   if (!dias || !horas || isNaN(parseInt(dias)) || isNaN(parseInt(horas))) {
-      loader.classList.remove("show");
-      resultado.innerHTML = '<div class="error">Por favor, insira dias e horas válidos.</div>';
-      return;
+    loader.classList.remove("show");
+    resultado.innerHTML = '<div class="error">Por favor, insira dias e horas válidos.</div>';
+    return;
   }
 
 
@@ -27,7 +27,7 @@ document.getElementById("gerar").addEventListener("click", async () => {
         return [];
       });
   } catch (err) {
-    loader.classList.remove("show"); 
+    loader.classList.remove("show");
     resultado.innerHTML = '<div class="error">Erro ao carregar conteúdo: ' + err.message + '</div>';
     return;
   }
@@ -76,7 +76,7 @@ document.getElementById("gerar").addEventListener("click", async () => {
     // *** ESTE É O PASSO PRINCIPAL ***
     // 1. O prompt foi ajustado para PEDIR Markdown.
     // 2. marked.parse() converte o texto Markdown da IA para HTML.
-    const htmlCronograma = marked.parse(text); 
+    const htmlCronograma = marked.parse(text);
 
     // 3. Inserir o HTML limpo e formatado no elemento.
     resultado.innerHTML = `<div class="response">${htmlCronograma}</div>`;
@@ -84,7 +84,7 @@ document.getElementById("gerar").addEventListener("click", async () => {
 
     // *** Opcional: Adicionar algum estilo para o H2 gerado pelo Markdown
     // Você pode estilizar a classe .response H2 no seu CSS (ex: border-bottom)
-    
+
   } catch (err) {
     loader.classList.remove("show")
     resultado.innerHTML = `<div class="error">Erro na requisição: ${err.message}</div>`;
@@ -93,17 +93,15 @@ document.getElementById("gerar").addEventListener("click", async () => {
 });
 
 document.getElementById("gerar-pdf").addEventListener("click", () => {
-  const {jsPDF} = window.jspdf;
+  const { jsPDF } = window.jspdf;
   const elemento = document.querySelector(".response");
 
-  if(!elemento) {
+  if (!elemento) {
     alert("Gere o cronograma primeiro!");
     return;
   }
 
-  html2canvas(elemento, {scale: 2}).then((canvas) => {
-    pdf.setFontSize(16);
-    pdf.text("📘 Cronograma de Estudos - Vestibulinho ETEC", 10, 15);
+  html2canvas(elemento, { scale: 2 }).then((canvas) => {
     const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF("p", "mm", "a4");
 
@@ -113,15 +111,18 @@ document.getElementById("gerar-pdf").addEventListener("click", () => {
     const imgWidth = pdfWidth;
     const imgHeight = (canvas.heigth * pdfWidth) / canvas.width;
 
-    let heigthLeft = imgHeight;
+    let heightLeft = imgHeight;
     let position = 0;
-
     const marginTop = 10;
-    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+
+    pdf.setFontSize(16);
+    pdf.text("📘 Cronograma de Estudos - Vestibulinho ETEC", 10, 15);
+
+    pdf.addImage(imgData, "PNG", 0, marginTop, position, imgWidth, imgHeight);
     heightLeft -= pdfHeight;
 
     while (heightLeft > 0) {
-      position = heigthLeft - imgHeight;
+      position = heightLeft - imgHeight;
       pdf.addPage();
       pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
       heightLeft -= pdfHeight;
