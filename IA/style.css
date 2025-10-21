@@ -1,0 +1,170 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    height: auto;
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+}
+
+.subtitulo {
+    border-radius: 64px 48px 16px 96px;
+    border: 1px solid rgb(185, 0, 28);
+    background-color:#800115;
+    color: #fff;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 77%;
+    height: 65px;
+    font-size: 14px;
+
+    margin-left: 115px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+    width: 1000px;
+    text-align: center;
+    box-shadow: 0 8px 20px hsl(351, 100%, 95%);
+}
+
+input {
+    width: 35%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-bottom: 2px solid rgb(185, 0, 28);
+    margin-left: 15px;
+}
+
+input:focus{
+    border: none;
+    border-bottom: 2px solid #800115;
+    outline: none;
+}
+
+input::placeholder {
+    color: #d0d0d0;
+}
+
+button {
+    padding: 10px 100px;
+    border: none;
+    background-color: #800115;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color:rgb(185, 0, 28);
+    color: #fff
+}
+
+pre {
+    text-align: left;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    min-height: 50px;
+    white-space:inherit;
+    word-wrap: break-word;
+    font-family: "Montserrat", sans-serif;
+    line-height: 1.6;
+    color: #333;
+    font-size: 14px;
+}
+
+pre strong {
+    display: block; /* Garante que o título ocupe uma linha inteira */
+    margin-top: 15px; /* Espaço antes de cada novo dia */
+    margin-bottom: 5px; /* Espaço depois do título */
+    color: #800115; /* Cor da marca (vermelho escuro) */
+    font-size: 16px;
+    border-bottom: 1px solid #ffbec8; /* Linha sutil para separar o dia */
+    padding-bottom: 3px;
+    font-weight: 700;
+}
+
+h1 {
+    color: #800115;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+}
+
+/*Carregamento*/
+
+.loader {
+    display: none;
+    width: 100px;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader.show {
+    display: flex;
+}
+
+.loader span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #800115;
+    margin: 0 3px;
+    animation: loading .6s infinite ease-in-out;
+}
+
+@keyframes loading {
+    0%,
+    80%,
+    100% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+}
+
+span:nth-child(2) {
+    animation-delay: .12s;
+}
+
+span:nth-child(3) {
+    animation-delay: .24s;
+}
+
+.icone i {
+    font-size: 50px;
+    color: #800115;
+    margin-top: 15px;
+  }
+
+  /* Responsividade para mobile */
+  @media (max-width: 600px) {
+    .icone i {
+      font-size: 40px;
+    }
+  }
+
+  .error {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+ }
