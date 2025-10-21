@@ -102,13 +102,31 @@ document.getElementById("gerar-pdf").addEventListener("click", () => {
   }
 
   html2canvas(elemento, {scale: 2}).then((canvas) => {
+    pdf.setFontSize(16);
+    pdf.text("📘 Cronograma de Estudos - Vestibulinho ETEC", 10, 15);
     const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF("p", "mm", "a4");
 
     const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    const pdfHeight = pdf.internal.pageSize.getHeight();
 
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    const imgWidth = pdfWidth;
+    const imgHeight = (canvas.heigth * pdfWidth) / canvas.width;
+
+    let heigthLeft = imgHeight;
+    let position = 0;
+
+    const marginTop = 10;
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pdfHeight;
+
+    while (heightLeft > 0) {
+      position = heigthLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pdfHeight;
+    }
+
     pdf.save("cronograma.pdf");
   });
 });
