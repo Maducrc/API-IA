@@ -1,5 +1,3 @@
-// Certifique-se de que este script.js está sendo executado APÓS a inclusão do Marked.js no HTML
-
 document.getElementById("gerar").addEventListener("click", async () => {
     
   // --- 1. Captura de Valores e Elementos ---
@@ -82,6 +80,7 @@ document.getElementById("gerar").addEventListener("click", async () => {
 
     // 3. Inserir o HTML limpo e formatado no elemento.
     resultado.innerHTML = `<div class="response">${htmlCronograma}</div>`;
+    document.getElementById("gerar-pdf").style.display = "inline-block";
 
     // *** Opcional: Adicionar algum estilo para o H2 gerado pelo Markdown
     // Você pode estilizar a classe .response H2 no seu CSS (ex: border-bottom)
@@ -91,4 +90,25 @@ document.getElementById("gerar").addEventListener("click", async () => {
     resultado.innerHTML = `<div class="error">Erro na requisição: ${err.message}</div>`;
     console.error(err);
   }
+});
+
+document.getElementById("gerar-pdf").addEventListener("click", () => {
+  const {jsPDF} = window.jspdf;
+  const elemento = document.querySelector(".response");
+
+  if(!elemento) {
+    alert("Gere o cronograma primeiro!");
+    return;
+  }
+
+  html2canvas(elemento, {scale: 2}).then((canvas) => {
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save("cronograma.pdf");
+  });
 });

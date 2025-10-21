@@ -168,3 +168,18 @@ span:nth-child(3) {
     margin-top: 20px;
     font-size: 13px;
  }
+
+ #gerar-pdf {
+  padding: 10px 50px;
+  border: none;
+  background-color: #b9001c;
+  color: #fff;
+  font-size: 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+#gerar-pdf:hover {
+  background-color: #800115;
+}
