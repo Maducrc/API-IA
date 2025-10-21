@@ -1,8 +1,43 @@
-[
+{
+  "peso": [
   { "nome": "Matemática", "peso": 5 },
   { "nome": "Português", "peso": 3 },
   { "nome": "Física", "peso": 4 },
   { "nome": "Química", "peso": 4 },
+  { "nome": "Biologia", "peso": 4 },
   { "nome": "História", "peso": 2 },
   { "nome": "Geografia", "peso": 2 }
-]
+ ],
+
+
+  "temas": [
+    {
+      "nome": "Matemática",
+      "topicos": "Operações básicas, frações, proporções, regra de três, equações de primeiro e segundo grau, geometria, área e perímetro."
+    },
+    {
+      "nome": "Português",
+      "topicos": "Interpretação de Textos, gramática, figuras de linguagem, acentuação, pontuação e concordância verbal e nominal."
+    },
+    {
+      "nome": "Física",
+      "topicos": "Calorimetria, eletricidade, ondulatória, cinemática e leis de Newton."
+    },
+    {
+      "nome": "Química",
+      "topicos": " Foco em átomo, notação científica e tabela periódica."
+    },
+    {
+      "nome": "Biologia",
+      "topicos": "Origem e evolução dos seres vivos, ecologia, anatomia/fisiologia do corpo humano e doenças."
+    },
+    {
+      "nome": "História",
+      "topicos": " Antiguidade, História do Brasil (Império Bizantino - nota: provavelmente se refere à Idade Média/Temas gerais de Império antes de focar em Brasil Império), Revolução Francesa e Iluminismo."
+    },
+    {
+      "nome": "Geografia",
+      "topicos": "Espaço rural e urbano, problemas de urbanização, análise populacional, biomas brasileiros e hidrografia." 
+    }
+  ]
+}
