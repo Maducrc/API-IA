@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRONOGRAMA DE ESTUDOS</title>
+    <link rel="stylesheet" href="style.css">
+    <!--Fontes-->
+    <link href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&family=Bebas+Neue&family=Calistoga&family=DM+Serif+Text:ital@0;1&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Unbounded:wght@200..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!--Ícones-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--HTML-->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1> <i class="fa-solid fa-book"></i> Cronograma de Estudos - Vestibulinho Etec</h1>
+
+        <div class="subtitulo">
+            A organização dos estudos para o Vestibulinho é um desafio? Conheça a ferramenta perfeita: uma IA  <br>
+             que cria seu cronograma personalizado, usando como base os dias e horas que você tem disponíveis.
+        </div>
+
+        <input type="text" id="dias" placeholder="Dias até a prova">
+        <input type="text" id="horas" placeholder="Horas disponíveis por dia">
+        <br>
+        <button id="gerar">Gerar Cronograma</button>
+
+        <!-- Exibição do resultado -->
+        <pre id="resultado"> 
+            <div class="loader" id="loader">
+               <span></span>
+               <span></span>
+               <span></span>
+            </div>
+          </pre>
+
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>
