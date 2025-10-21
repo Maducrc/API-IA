@@ -54,6 +54,8 @@ document.getElementById("gerar").addEventListener("click", async () => {
   try {
     resultado.innerHTML = '';
 
+    const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContentStream?key=${API_KEY}`;
+
     const resultadoDaApi = await fetch(API_URL, {
       method: "POST",
       headers: {
