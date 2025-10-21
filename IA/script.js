@@ -47,11 +47,15 @@ document.getElementById("gerar").addEventListener("click", async () => {
     Eu quero apenas que você me mande o cronograma, não comente sobre o codigo ou algo a mais , apenas a resposta.
   ${JSON.stringify({ dias_ate_prova: dias, horas_por_dia: horas, materias: conteudo })}`;
 
-  const API_KEY = "AIzaSyAh-CyyJeuI3gT3-qmSFEHKGWBekzdHdqQ"; // Mantenha isso em um local SEGURO (variável de ambiente, não no frontend)
-  const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+  const API_KEY = "AIzaSyDfwhW2rn-xlVlqFq_bi0OS1EZDGyokDHs"; 
+  const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContentStream?key=${API_KEY}`;
 
   // --- 4. Requisição à API ---
   try {
+    resultado.innerHTML = '';
+
+    const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContentStream?key=${API_KEY}`;
+
     const resultadoDaApi = await fetch(API_URL, {
       method: "POST",
       headers: {
@@ -64,16 +68,56 @@ document.getElementById("gerar").addEventListener("click", async () => {
       }),
     });
 
-    loader.classList.remove("show");
+    loader.classList.remove("show"); // esconde o loader assim que a conexão é estabelecida
 
     if (!resultadoDaApi.ok) {
       throw new Error(`Erro na API: ${resultadoDaApi.status} ${resultadoDaApi.statusText}`);
     }
 
-    const data = await resultadoDaApi.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Não consegui gerar um cronograma";
+    //processo de stream (o texto vai aparecendo enquanto gerado)
+    const reader = resultadoDaApi.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+    let fullMarkdownText = "";
 
-    // *** ESTE É O PASSO PRINCIPAL ***
+    //cria um elemento para exibir o texto que etsa chegando
+    const responseDiv = document.createElement('div');
+    responseDiv.classList.add('response');
+    resultado.appendChild(responseDiv);
+
+    //loop para ler os pedaços
+    while (true) {
+      const { done, value} = await reader.read();
+      if(done) break; //terminou
+
+      let chunk = decoder.decode(value);
+
+      const parts =   chunk.split('\n');
+
+      for (const part of parts) {
+        if (part.startsWith('data: ')) {
+          const jsonText = part.substring(6).trim();
+
+          try {
+            const data = JSON.parse(jsonText);
+            const textPart = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+            //concatena e imediatamente renderiza o texto que chegou
+            fullMarkdownText += textPart;
+
+            //a cada novo chunk, converte o texto completo de markdown para html e exibe
+            responseDiv.innerHTML= marked.parse(fullMarkdownText);
+
+          } catch (e) {
+
+          }
+        }
+      }
+    }
+
+    //após a resposta completa garante que o último html é exibido e mostra o botão de pdf
+    responseDiv.innerHTML = marked.parse(fullMarkdownText);
+    document.getElementById("gerar-pdf").style.display = "inline-block";
+
     // 1. O prompt foi ajustado para PEDIR Markdown.
     // 2. marked.parse() converte o texto Markdown da IA para HTML.
     const htmlCronograma = marked.parse(text);
@@ -81,9 +125,6 @@ document.getElementById("gerar").addEventListener("click", async () => {
     // 3. Inserir o HTML limpo e formatado no elemento.
     resultado.innerHTML = `<div class="response">${htmlCronograma}</div>`;
     document.getElementById("gerar-pdf").style.display = "inline-block";
-
-    // *** Opcional: Adicionar algum estilo para o H2 gerado pelo Markdown
-    // Você pode estilizar a classe .response H2 no seu CSS (ex: border-bottom)
 
   } catch (err) {
     loader.classList.remove("show")
