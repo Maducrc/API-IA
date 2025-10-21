@@ -16,7 +16,6 @@ document.getElementById("gerar").addEventListener("click", async () => {
     return;
   }
 
-
   // --- 2. Carregamento do Conteúdo JSON ---
   let conteudo;
   try {
