@@ -47,7 +47,7 @@ document.getElementById("gerar").addEventListener("click", async () => {
     Eu quero apenas que você me mande o cronograma, não comente sobre o codigo ou algo a mais , apenas a resposta.
   ${JSON.stringify({ dias_ate_prova: dias, horas_por_dia: horas, materias: conteudo })}`;
 
-  const API_KEY = "AIzaSyAuasjHIPFDJuiUphYkxl-W8DKhVzdzDE4"; 
+  const API_KEY = "AIzaSyBEywh7QH0w1GDe0CxC1fLf9ul3WiBft0s"; 
   const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 
   // --- 4. Requisição à API ---
